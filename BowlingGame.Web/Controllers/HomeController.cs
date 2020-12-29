@@ -13,13 +13,14 @@ namespace BowlingGame.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ICachedGame _cachedGame;
-        public HomeController(ILogger<HomeController> logger, ICachedGame cachedGame)
+        private readonly ICachedContest _cachedGame;
+        public HomeController(ILogger<HomeController> logger, ICachedContest cachedGame)
         {
             _logger = logger;
             _cachedGame = cachedGame;
         }
 
+        [Route("")]
         public IActionResult Index()
         {
             return View(_cachedGame);

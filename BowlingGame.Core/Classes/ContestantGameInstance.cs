@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BowlingGame.Core.Classes
 {
-    public class ContestantGameInstance : IContestantInstance
+    public class ContestantGameInstance : IContestant
     {
         private bool _isInstanceComplete;
         public bool IsInstanceComplete => _isInstanceComplete;

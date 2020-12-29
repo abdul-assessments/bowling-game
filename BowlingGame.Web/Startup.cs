@@ -1,4 +1,5 @@
 using BowlingGame.Core.Interfaces;
+using BowlingGame.Web.Extensions.ServiceCollection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,8 +29,8 @@ namespace BowlingGame.Web
             services.AddControllersWithViews();
             services.AddMvc(options => options.EnableEndpointRouting = false);
 
-            //Dependency registration for concrete class BowlingGame
-            services.AddSingleton<ICachedGame>(x => new Core.Classes.BowlingGame(x.GetRequiredService<IMemoryCache>()));
+            //Add all bowling game dependencies into this extension
+            services.AddBowlingGameDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

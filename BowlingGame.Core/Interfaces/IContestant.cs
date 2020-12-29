@@ -4,11 +4,10 @@ using System.Text;
 
 namespace BowlingGame.Core.Interfaces
 {
-    public interface IContestantInstance
+    public interface IContestant
     {
         string ContestantName { get; set; }
         bool IsInstanceComplete { get; }
         int GetScore();
-        void Roll(int pins);
     }
 }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace BowlingGame.Core.Interfaces
 {
-    public interface ICachedGame
+    public interface IContest
     {
-        bool DoesGamingSessionExist { get; }
-        bool IsGamingSessionComplete { get; }
+        bool IsContestComplete { get; }
     }
 }
