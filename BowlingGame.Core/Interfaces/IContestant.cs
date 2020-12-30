@@ -4,10 +4,11 @@ using System.Text;
 
 namespace BowlingGame.Core.Interfaces
 {
-    public interface IContestant
+    public interface IContestant<ScoringDataType>
     {
         string ContestantName { get; set; }
-        bool IsInstanceComplete { get; }
+        List<ScoringDataType> ScoringData { get; set; }
+        bool IsInstanceComplete { get; set; }
         int GetScore();
     }
 }

@@ -16,9 +16,10 @@ namespace BowlingGame.Web.Extensions.ServiceCollection
             //Dependency registration for concrete class BowlingGame
             services.AddSingleton<Models.BowlingGame>();
 
-            //register as multiple services
+            //register singleton BowlingGame as multiple services
             services.AddSingleton<ICachedContest>(x => x.GetRequiredService<Models.BowlingGame>());
             services.AddSingleton<IContest>(x => x.GetRequiredService<Models.BowlingGame>());
+
             return services;
         }
     }

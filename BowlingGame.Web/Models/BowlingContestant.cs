@@ -6,23 +6,22 @@ using System.Threading.Tasks;
 
 namespace BowlingGame.Web.Models
 {
-    public class BowlingContestant : IContestant
+    public class BowlingContestant : IContestant<FrameData>
     {
-        private List<FrameData> _scoringData;
-        private bool _isInstanceComplete;
-        public bool IsInstanceComplete => _isInstanceComplete;
+        public bool IsInstanceComplete { get; set; }
         public string ContestantName { get; set; }
+        public List<FrameData> ScoringData { get; set; }
 
         public BowlingContestant()
         {
-            _scoringData = new List<FrameData>();
+            ScoringData = new List<FrameData>();
         }
 
         public int GetScore()
         {
             int totalScore = 0;
             //calculate score for frames 1-9
-            foreach (var group in _scoringData.Where(x => x.Frame != 10).GroupBy(x => x.Frame))
+            foreach (var group in ScoringData.Where(x => x.Frame != 10).GroupBy(x => x.Frame))
             {
                 int frameScore = 0;
                 int frameNumber = group.Key;
@@ -32,14 +31,14 @@ namespace BowlingGame.Web.Models
                 if (currentFrame.Count() == 1 && currentFrame.Sum(x => x.PinsKnocked) == 10)
                 {
                     FrameData frame = currentFrame.Last();
-                    int index = _scoringData.LastIndexOf(frame);
-                    frameScore = 10 + _scoringData[index + 1].PinsKnocked + _scoringData[index + 2].PinsKnocked;
+                    int index = ScoringData.LastIndexOf(frame);
+                    frameScore = 10 + ScoringData[index + 1].PinsKnocked + ScoringData[index + 2].PinsKnocked;
                 }
                 else if (currentFrame.Count() == 2 && currentFrame.Sum(x => x.PinsKnocked) == 10)
                 {
                     FrameData frame = currentFrame.Last();
-                    int index = _scoringData.LastIndexOf(frame);
-                    frameScore = 10 + _scoringData[index + 1].PinsKnocked;
+                    int index = ScoringData.LastIndexOf(frame);
+                    frameScore = 10 + ScoringData[index + 1].PinsKnocked;
                 }
                 else
                 {
@@ -50,43 +49,9 @@ namespace BowlingGame.Web.Models
             }
 
             //add 10th frame
-            totalScore += _scoringData.Where(x => x.Frame == 10).Sum(x => x.PinsKnocked);
+            totalScore += ScoringData.Where(x => x.Frame == 10).Sum(x => x.PinsKnocked);
 
             return totalScore;
-        }
-
-        public void Roll(int pins)
-        {
-            bool hasPreviousFrame = _scoringData.Any();
-
-            if (!hasPreviousFrame)
-            {
-                _scoringData.Add(new FrameData { Frame = 1, PinsKnocked = pins });
-            }
-            else
-            {
-                IEnumerable<FrameData> previousFrame = _scoringData.GroupBy(x => x.Frame).Last().AsEnumerable();
-                int previousFrameNumber = previousFrame.First().Frame;
-
-                //check if bonus round
-                bool previousFrameComplete = previousFrameNumber < 10
-                    ? previousFrame.Sum(x => x.PinsKnocked) == 10 || previousFrame.Count() == 2
-                    : false;
-                
-                if (previousFrameNumber == 10)
-                    //check if max rounds
-                    previousFrameComplete = previousFrame.Count() == 2 || previousFrameComplete;
-                
-                if (!previousFrameComplete)
-                {
-                    _scoringData.Add(new FrameData { Frame = previousFrameNumber, PinsKnocked = pins });
-                    _isInstanceComplete = previousFrameComplete && previousFrame.Count() == 3;
-                }
-                else if (!_isInstanceComplete)
-                {
-                    _scoringData.Add(new FrameData { Frame = previousFrameNumber + 1, PinsKnocked = pins });
-                }
-            }
         }
     }
 }

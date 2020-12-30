@@ -12,10 +12,10 @@ namespace BowlingGame.Web.Controllers
     [ApiController]
     public class BowlingController : ControllerBase
     {
-        private ICachedContest _cachedGame;
-        public BowlingController(ICachedContest cachedGame)
+        private IContest _bowlingGame;
+        public BowlingController(IContest contest)
         {
-            _cachedGame = cachedGame;
+            _bowlingGame = contest;
         }
 
 

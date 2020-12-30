@@ -1,11 +1,11 @@
-﻿using BowlingGame.Core.Classes;
-using BowlingGame.Core.Interfaces;
+﻿using BowlingGame.Core.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BowlingGame.Core.Extensions.MemoryCache
+namespace BowlingGame.Web.Extensions.MemoryCache
 {
     public static class ContestantExtensions
     {
