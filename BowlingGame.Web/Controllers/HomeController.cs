@@ -26,6 +26,7 @@ namespace BowlingGame.Web.Controllers
             return View(_cachedGame);
         }
 
+        [Route("privacy")]
         public IActionResult Privacy()
         {
             return View();

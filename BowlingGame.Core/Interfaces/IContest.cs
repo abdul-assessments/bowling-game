@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BowlingGame.Core.Interfaces
 {
-    public interface IContest
+    public interface IContest<ScoringData>
     {
         bool IsContestComplete { get; }
-        List<TContestant> GetLeaderboard<TContestant>() where TContestant : IContestant;
+        List<TContestant> GetContestants<TContestant>() where TContestant : IContestant<ScoringData>;
     }
 }

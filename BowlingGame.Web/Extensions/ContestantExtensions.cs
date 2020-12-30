@@ -1,13 +1,13 @@
 ﻿using BowlingGame.Core.Interfaces;
-using BowlingGame.Web.Models;
+using BowlingGame.Web.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BowlingGame.Web.Extensions.Contestant
+namespace BowlingGame.Web.Extensions
 {
-    public static class BowlingExtensions
+    public static class ContestantExtensions
     {
         public static void Roll(this IContestant<FrameData> contestant, int pins)
         {
@@ -27,16 +27,13 @@ namespace BowlingGame.Web.Extensions.Contestant
                     ? previousFrame.Sum(x => x.PinsKnocked) == 10 || previousFrame.Count() == 2
                     : false;
 
-                if (previousFrameNumber == 10)
-                    //check if max rounds
-                    previousFrameComplete = previousFrame.Count() == 2 || previousFrameComplete;
-
                 if (!previousFrameComplete)
                 {
+                    contestant.IsInstanceComplete = previousFrameNumber == 10 && previousFrame.Count() == 1 && previousFrame.Sum(x => x.PinsKnocked) + pins < 10 ||
+                                                     previousFrameNumber == 10 && previousFrame.Count() == 2;
                     contestant.ScoringData.Add(new FrameData { Frame = previousFrameNumber, PinsKnocked = pins });
-                    contestant.IsInstanceComplete = previousFrameComplete && previousFrame.Count() == 3;
                 }
-                else if (!contestant.IsInstanceComplete)
+                else
                 {
                     contestant.ScoringData.Add(new FrameData { Frame = previousFrameNumber + 1, PinsKnocked = pins });
                 }
