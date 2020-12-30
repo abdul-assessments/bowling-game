@@ -10,18 +10,23 @@ namespace BowlingGame.Web.Models
 {
     public class BowlingGame : ICachedContest, IContest
     {
-        private List<BowlingContestant> _contestants;
         private bool _doesGamingSessionExist;
         private bool _isGamingSessionComplete;
+        private IMemoryCache _cache;
 
         public bool DoesCachedGameExist => _doesGamingSessionExist;
         public bool IsContestComplete => _isGamingSessionComplete;
 
-        public BowlingGame(IMemoryCache _cache)
+        public BowlingGame(IMemoryCache cache)
         {
-            _contestants = _cache.GetContestants<BowlingContestant>();
-            _doesGamingSessionExist = _contestants.Any();
-            _isGamingSessionComplete = _doesGamingSessionExist ? !_contestants.Any(x => !x.IsInstanceComplete) : false;
+            _cache = cache;
+            _doesGamingSessionExist = _cache.GetContestants<IContestant>().Any();
+            _isGamingSessionComplete = _doesGamingSessionExist ? !_cache.GetContestants<IContestant>().Any(x => !x.IsInstanceComplete) : false;
+        }
+
+        public List<T> GetLeaderboard<T>() where T : IContestant
+        {
+            return _cache.GetContestants<T>().OrderBy(x => x.GetScore()).ToList();
         }
     }
 }

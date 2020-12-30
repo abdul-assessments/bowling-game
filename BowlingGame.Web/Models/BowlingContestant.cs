@@ -75,7 +75,7 @@ namespace BowlingGame.Web.Models
                 
                 if (previousFrameNumber == 10)
                     //check if max rounds
-                    previousFrameComplete = previousFrame.Count() == 3 || previousFrameComplete;
+                    previousFrameComplete = previousFrame.Count() == 2 || previousFrameComplete;
                 
                 if (!previousFrameComplete)
                 {

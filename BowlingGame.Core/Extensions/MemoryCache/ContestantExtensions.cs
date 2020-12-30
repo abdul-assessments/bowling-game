@@ -18,5 +18,10 @@ namespace BowlingGame.Core.Extensions.MemoryCache
         {
             cache.Set("Contestants", contestantList);
         }
+
+        public static void ResetGame(this IMemoryCache cache)
+        {
+            cache.Remove("Contestants");
+        }
     }
 }

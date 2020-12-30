@@ -7,5 +7,6 @@ namespace BowlingGame.Core.Interfaces
     public interface IContest
     {
         bool IsContestComplete { get; }
+        List<TContestant> GetLeaderboard<TContestant>() where TContestant : IContestant;
     }
 }

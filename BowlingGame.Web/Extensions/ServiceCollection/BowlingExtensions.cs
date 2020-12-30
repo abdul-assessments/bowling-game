@@ -1,4 +1,5 @@
 ﻿using BowlingGame.Core.Interfaces;
+using BowlingGame.Web.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using System;
