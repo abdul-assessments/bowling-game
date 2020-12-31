@@ -9,33 +9,33 @@ namespace BowlingGame.Web.Extensions
 {
     public static class ContestantExtensions
     {
-        public static void Roll(this IContestant<FrameData> contestant, int pins)
+        public static void Roll(this IContestant contestant, int pins)
         {
             bool hasPreviousFrame = contestant.ScoringData.Any();
 
             if (!hasPreviousFrame)
             {
-                contestant.ScoringData.Add(new FrameData { Frame = 1, PinsKnocked = pins });
+                contestant.ScoringData.Add(new FrameData { ScoreFrame = 1, Score = pins });
             }
             else
             {
-                IEnumerable<FrameData> previousFrame = contestant.ScoringData.GroupBy(x => x.Frame).Last().AsEnumerable();
-                int previousFrameNumber = previousFrame.First().Frame;
+                IEnumerable<IScoreRecord> previousFrame = contestant.ScoringData.GroupBy(x => x.ScoreFrame).Last().AsEnumerable();
+                int previousFrameNumber = previousFrame.First().ScoreFrame;
 
                 //check if bonus round
                 bool previousFrameComplete = previousFrameNumber < 10
-                    ? previousFrame.Sum(x => x.PinsKnocked) == 10 || previousFrame.Count() == 2
+                    ? previousFrame.Sum(x => x.Score) == 10 || previousFrame.Count() == 2
                     : false;
 
                 if (!previousFrameComplete)
                 {
-                    contestant.IsInstanceComplete = previousFrameNumber == 10 && previousFrame.Count() == 1 && previousFrame.Sum(x => x.PinsKnocked) + pins < 10 ||
+                    contestant.IsInstanceComplete = previousFrameNumber == 10 && previousFrame.Count() == 1 && previousFrame.Sum(x => x.Score) + pins < 10 ||
                                                      previousFrameNumber == 10 && previousFrame.Count() == 2;
-                    contestant.ScoringData.Add(new FrameData { Frame = previousFrameNumber, PinsKnocked = pins });
+                    contestant.ScoringData.Add(new FrameData { ScoreFrame = previousFrameNumber, Score = pins });
                 }
                 else
                 {
-                    contestant.ScoringData.Add(new FrameData { Frame = previousFrameNumber + 1, PinsKnocked = pins });
+                    contestant.ScoringData.Add(new FrameData { ScoreFrame = previousFrameNumber + 1, Score = pins });
                 }
             }
         }

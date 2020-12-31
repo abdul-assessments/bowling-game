@@ -1,7 +1,6 @@
 ﻿using BowlingGame.Core.Interfaces;
 using BowlingGame.Web.Extensions;
 using BowlingGame.Web.DataModels;
-using BowlingGame.Web.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,8 +14,8 @@ namespace BowlingGame.Web.Controllers
     [ApiController]
     public class BowlingController : ControllerBase
     {
-        private IContest<FrameData> _bowlingGame;
-        public BowlingController(IContest<FrameData> bowlingGame)
+        private IContest _bowlingGame;
+        public BowlingController(IContest bowlingGame)
         {
             _bowlingGame = bowlingGame;
         }
@@ -24,30 +23,69 @@ namespace BowlingGame.Web.Controllers
 
         [HttpPost]
         [Route("roll")]
-        public bool Roll(Roll rollInput)
+        public IActionResult Roll(Roll rollInput)
         {
-            return _bowlingGame.Roll(rollInput);
+            return Ok(_bowlingGame.Roll(rollInput));
         }        
 
         [HttpPost]
         [Route("addcontestant")]
-        public void AddContestant(Contestant contestant)
+        public IActionResult AddContestants(List<Contestant> contestantList)
         {
-
+            if (!_bowlingGame.Contestants.Any())
+            {
+                _bowlingGame.Contestants = contestantList
+                                            .Select(x => new Models.BowlingContestant { ContestantName = x.ContestantName } )
+                                            .Cast<IContestant>()
+                                            .ToList();
+                return Ok(true);
+            }
+            return Ok(false);
         }
 
         [HttpGet]
         [Route("leaderboard")]
-        public IEnumerable<LeaderboardData> Leaderboard()
+        public IActionResult Leaderboard()
         {
-            return _bowlingGame.GetLeaderboard();
+            return Ok(_bowlingGame.GetLeaderboard());
+        }
+
+        [HttpGet]
+        [Route("hasexisting")]
+        public IActionResult CheckExistingGame()
+        {
+            return Ok(_bowlingGame.Contestants.Any());
+        }
+
+        [HttpGet]
+        [Route("iscomplete")]
+        public IActionResult CheckExistingGameIsComplete()
+        {
+            return Ok(_bowlingGame.IsGameComplete());
+        }
+
+        [HttpGet]
+        [Route("score/{contestant}")]
+        public IActionResult ContestantScores(string contestant)
+        {
+            return Ok(_bowlingGame.Contestants.Where(x => x.ContestantName == contestant)
+                                            .DefaultIfEmpty(new Models.BowlingContestant())
+                                            .First().GetScore());
         }
 
         [HttpGet]
         [Route("reset")]
-        public void ResetGame()
+        public IActionResult ResetGame()
         {
-
+            try
+            {
+                _bowlingGame.Contestants = new List<IContestant>();
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(500);
+            }            
         }
     }
 }

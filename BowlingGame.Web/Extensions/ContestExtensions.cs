@@ -16,17 +16,26 @@ namespace BowlingGame.Web.Extensions
         /// <param name="contest"></param>
         /// <param name="rollInput"></param>
         /// <returns>bool: if contestant is finished playing</returns>
-        public static bool Roll(this IContest<FrameData> contest, Roll rollInput)
+        public static bool Roll(this IContest contest, Roll rollInput)
         {
-            BowlingContestant contestant = contest.GetContestants<BowlingContestant>()
-                                                    .FirstOrDefault(x => x.ContestantName == rollInput.ContestantName);
+            IContestant contestant = contest.Contestants.FirstOrDefault(x => x.ContestantName == rollInput.ContestantName);
             contestant.Roll(rollInput.PinsKnocked);
             return contestant.IsInstanceComplete;
         }
 
-        public static IEnumerable<LeaderboardData> GetLeaderboard(this IContest<FrameData> contest)
+        public static IEnumerable<LeaderboardData> GetLeaderboard(this IContest contest)
         {
-            return contest.GetContestants<BowlingContestant>().Select(x => new LeaderboardData { ContestantName = x.ContestantName, Score = x.GetScore() });
+            return contest.Contestants.Select(x => new LeaderboardData { ContestantName = x.ContestantName, Score = x.GetScore() });
+        }
+
+        public static void Reset(this IContest contest)
+        {
+            contest.Contestants = new List<IContestant>();
+        }
+
+        public static bool IsGameComplete(this IContest contest)
+        {
+            return !contest.Contestants.Any(x => !x.IsInstanceComplete);
         }
     }
 }

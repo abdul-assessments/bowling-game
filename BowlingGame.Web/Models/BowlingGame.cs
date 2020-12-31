@@ -9,31 +9,13 @@ using System.Threading.Tasks;
 
 namespace BowlingGame.Web.Models
 {
-    public class BowlingGame : ICachedContest, IContest<FrameData>
+    public class BowlingGame : IContest
     {
-        private bool _doesGamingSessionExist;
-        private bool _isGamingSessionComplete;
-        private IMemoryCache _cache;
-        private List
+        public List<IContestant> Contestants { get; set; }
 
-        public bool DoesCachedGameExist => _doesGamingSessionExist;
-        public bool IsContestComplete => _isGamingSessionComplete;
-
-        public BowlingGame(IMemoryCache cache)
+        public BowlingGame()
         {
-            _cache = cache;
-            _doesGamingSessionExist = _cache.GetContestants<IContestant<FrameData>>().Any();
-            _isGamingSessionComplete = _doesGamingSessionExist ? !_cache.GetContestants<IContestant<FrameData>>().Any(x => !x.IsInstanceComplete) : false;
-        }
-
-        public List<T> GetContestants<T>() where T : IContestant<FrameData>
-        {
-            return _cache.GetContestants<T>().OrderBy(x => x.GetScore()).ToList();
-        }
-
-        public void CacheData()
-        {
-            throw new NotImplementedException();
+            Contestants = new List<IContestant>();
         }
     }
 }

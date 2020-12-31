@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BowlingGame.Web.DataModels
 {
-    public class FrameData
+    public class FrameData : IScoreRecord
     {
-        public int Frame { get; set; }
-        public int PinsKnocked { get; set; }
+        public int ScoreFrame { get; set; }
+        public int Score { get; set; }
     }
 }

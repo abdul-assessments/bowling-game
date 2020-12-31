@@ -4,8 +4,9 @@ using System.Text;
 
 namespace BowlingGame.Core.Interfaces
 {
-    public interface IContest
+    public interface IScoreRecord
     {
-        List<IContestant> Contestants { get; set; }
+        int ScoreFrame { get; set; }
+        int Score { get; set; }
     }
 }
