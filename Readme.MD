@@ -1,5 +1,6 @@
 # Introduction 
 Welcome to the BowlingGame project. It is written in 2 parts. Angular for the FE and .Net Core for the BE.
+BowlingGame.Web as the Api and my-app with-in the api project as the angular FE.
 
 # Prerequisites
 * [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.101-windows-x64-installer)
