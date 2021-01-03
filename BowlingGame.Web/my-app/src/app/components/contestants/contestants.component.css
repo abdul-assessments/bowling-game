@@ -25,7 +25,6 @@
 
     .contestants li.selected {
       background-color: #CFD8DC;
-      color: white;
     }
     .contestants li.completed {
       background-color: red;

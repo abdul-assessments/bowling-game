@@ -1,4 +1,5 @@
 <h1>{{ title }}</h1>
+<h3>{{ description }}</h3>
 <table>
 <tr>
   <td>
@@ -17,6 +18,7 @@
       <ng-template #nogame>
         <div>
           <div>
+            <h3>If you got to this point without any errors in the notifications area, you should be good to go</h3>
             No Games underway - To start, follow the instructions below:
             <ol>
               <li>
@@ -33,6 +35,12 @@
               </li>
               <li>
                 The Game automatically completes once all contestants turns are complete.
+              </li>
+              <li>
+                Game's are cached in the Api, to start a new game, you will need to click 'Start a new game'
+              </li>
+              <li>
+                There *should be no way to cheat, you are welcome to try :)
               </li>
             </ol>
           </div>

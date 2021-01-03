@@ -1,10 +1,8 @@
 <h1>Contestants</h1>
 <div>
-  <button class="clear" (click)="resetGame()">Reset Cache</button>
+  <button class="clear" (click)="resetGame()">Start a new game</button>
   <div *ngIf="contestants.length && !bowlingGameService.isGameUnderway">
-    <button (click)="startContest()">
-      Begin Game!!!
-    </button>
+    <b>Click me to begin => <button (click)="startContest()">Begin Game!!!</button></b><br/><br/>
   </div>
   <div *ngIf="!bowlingGameService.isGameUnderway; else gamestarted">
     <label>
