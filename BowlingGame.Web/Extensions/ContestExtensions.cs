@@ -15,17 +15,20 @@ namespace BowlingGame.Web.Extensions
         /// </summary>
         /// <param name="contest"></param>
         /// <param name="rollInput"></param>
-        /// <returns>bool: if contestant is finished playing</returns>
-        public static bool Roll(this IContest contest, Roll rollInput)
+        /// <returns>The amount of pins that can be thrown on next throw, -1 if player game is done</returns>
+        public static int Roll(this IContest contest, Roll rollInput)
         {
             IContestant contestant = contest.Contestants.FirstOrDefault(x => x.ContestantName == rollInput.ContestantName);
-            contestant.Roll(rollInput.PinsKnocked);
-            return contestant.IsInstanceComplete;
+            int pins = 0;
+            if (!contestant.IsInstanceComplete)
+                pins = contestant.Roll(rollInput.PinsKnocked);
+
+            return contestant.IsInstanceComplete ? - 1 : pins;
         }
 
         public static IEnumerable<LeaderboardData> GetLeaderboard(this IContest contest)
         {
-            return contest.Contestants.Select(x => new LeaderboardData { ContestantName = x.ContestantName, Score = x.GetScore() });
+            return contest.Contestants.Select(x => new LeaderboardData { ContestantName = x.ContestantName, Score = x.GetScore(), ScoreFrame = x.GetLastScoredFrame() }).OrderByDescending(x => x.Score);
         }
 
         public static void Reset(this IContest contest)

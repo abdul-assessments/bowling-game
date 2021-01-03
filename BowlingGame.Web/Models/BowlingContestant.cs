@@ -33,13 +33,35 @@ namespace BowlingGame.Web.Models
                 {
                     IScoreRecord frame = currentFrame.Last();
                     int index = ScoringData.LastIndexOf(frame);
-                    frameScore = 10 + ScoringData[index + 1].Score + ScoringData[index + 2].Score;
+                    try{
+                        frameScore = 10 + ScoringData[index + 1].Score + ScoringData[index + 2].Score;
+                    }
+                    catch
+                    {
+                        try{
+                            frameScore = 10 + ScoringData[index + 1].Score;
+                        }
+                        catch
+                        {
+                            frameScore = 10;
+                        }
+                        
+                    }
+                    
                 }
                 else if (currentFrame.Count() == 2 && currentFrame.Sum(x => x.Score) == 10)
                 {
                     IScoreRecord frame = currentFrame.Last();
                     int index = ScoringData.LastIndexOf(frame);
-                    frameScore = 10 + ScoringData[index + 1].Score;
+                    try
+                    {
+                        frameScore = 10 + ScoringData[index + 1].Score;
+                    }
+                    catch
+                    {
+                        frameScore = 10;
+                    }
+                    
                 }
                 else
                 {

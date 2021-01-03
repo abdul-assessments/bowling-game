@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 
 namespace BowlingGame.Web.Controllers
 {
+    [EnableCors("AngularBowlingGameIntegration")]
     [Route("api/bowling")]
     [ApiController]
     public class BowlingController : ControllerBase
@@ -25,11 +27,18 @@ namespace BowlingGame.Web.Controllers
         [Route("roll")]
         public IActionResult Roll(Roll rollInput)
         {
-            return Ok(_bowlingGame.Roll(rollInput));
+            if (_bowlingGame.Contestants.Any())
+            {
+                return Ok(_bowlingGame.Roll(rollInput));
+            }
+            else
+            {
+                return Ok();
+            }
         }        
 
         [HttpPost]
-        [Route("addcontestant")]
+        [Route("addcontestants")]
         public IActionResult AddContestants(List<Contestant> contestantList)
         {
             if (!_bowlingGame.Contestants.Any())
@@ -46,7 +55,7 @@ namespace BowlingGame.Web.Controllers
         [HttpGet]
         [Route("leaderboard")]
         public IActionResult Leaderboard()
-        {
+        {            
             return Ok(_bowlingGame.GetLeaderboard());
         }
 
@@ -58,19 +67,17 @@ namespace BowlingGame.Web.Controllers
         }
 
         [HttpGet]
-        [Route("iscomplete")]
-        public IActionResult CheckExistingGameIsComplete()
+        [Route("getcontestants")]
+        public IActionResult GetContestants()
         {
-            return Ok(_bowlingGame.IsGameComplete());
+            return Ok(_bowlingGame.Contestants.Select(x => new { x.ContestantName, pinsLeft = x.PinsLeft() }));
         }
 
         [HttpGet]
-        [Route("score/{contestant}")]
-        public IActionResult ContestantScores(string contestant)
+        [Route("iscomplete")]
+        public IActionResult CheckExistingGameIsComplete()
         {
-            return Ok(_bowlingGame.Contestants.Where(x => x.ContestantName == contestant)
-                                            .DefaultIfEmpty(new Models.BowlingContestant())
-                                            .First().GetScore());
+            return Ok(!_bowlingGame.Contestants.Any() || _bowlingGame.IsGameComplete());
         }
 
         [HttpGet]

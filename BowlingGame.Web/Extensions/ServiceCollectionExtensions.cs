@@ -15,6 +15,17 @@ namespace BowlingGame.Web.Extensions
             //Dependency registration for concrete class BowlingGame            
             services.AddSingleton<IContest, Models.BowlingGame>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AngularBowlingGameIntegration",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyMethod()
+                               .AllowAnyHeader();
+                    });
+            });
+
             return services;
         }
     }
