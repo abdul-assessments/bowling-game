@@ -1,0 +1,36 @@
+<h1>Contestants</h1>
+<div>
+  <button class="clear" (click)="resetGame()">Reset Cache</button>
+  <div *ngIf="contestants.length && !bowlingGameService.isGameUnderway">
+    <button (click)="startContest()">
+      Begin Game!!!
+    </button>
+  </div>
+  <div *ngIf="!bowlingGameService.isGameUnderway; else gamestarted">
+    <label>
+      Contestant Name (Please use unique names):
+      <input #contestantName />
+    </label>
+    <button (click)="add(contestantName.value); contestantName.value=''">
+      add
+    </button>
+  </div>
+  <ng-template #gamestarted>
+    <div *ngIf="!bowlingGameService.isGameComplete; else gamecomplete">
+      Game in session, select a green contestant to start rolling
+    </div>
+    <ng-template #gamecomplete>
+      <div>
+        Game session has completed. Please start a new game.
+      </div>
+    </ng-template>
+    
+  </ng-template>
+</div>
+<ul class="contestants">
+  <li *ngFor="let contestant of contestants" (click)="onClick(contestant)" [class.selected]="contestant === selectedContestant" [class.completed]="contestant.pinsLeft === -1">
+    <span class="badge" title="pins left">{{contestant.pinsLeft}}</span> {{contestant.contestantName}}
+  </li>
+</ul>
+
+<app-contestant-detail [contestant]="selectedContestant"></app-contestant-detail>

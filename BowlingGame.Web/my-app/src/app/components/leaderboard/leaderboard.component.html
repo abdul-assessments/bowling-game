@@ -1,0 +1,25 @@
+<h3>Leaderboard</h3>
+<table border="1">
+  <tr>
+    <th>
+      Contestant
+    </th>
+    <th>
+      Score
+    </th>
+    <th>
+      Last Scored Frame
+    </th>
+  </tr>
+  <tr *ngFor='let contestant of bowlingGameService.leaderboard'>
+    <td>
+      {{contestant.contestantName}}
+    </td>
+    <td>
+      {{contestant.score}}
+    </td>
+    <td>
+      {{contestant.scoreFrame}}
+    </td>
+  </tr>
+</table>

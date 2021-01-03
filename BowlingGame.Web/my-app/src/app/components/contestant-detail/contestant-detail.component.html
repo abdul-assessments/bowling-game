@@ -1,0 +1,27 @@
+<div *ngIf="contestant.contestantName">
+  <h2>{{contestant.contestantName | uppercase}}</h2>
+  <div *ngIf="bowlingGameService.isGameUnderway; else nogame">    
+    <div>
+      <div *ngIf="contestant.pinsLeft > -1; else nomoretries">
+        <div><span>pins left on next throw: </span>{{contestant.pinsLeft}}</div>
+        Only a maximum of {{contestant.pinsLeft}} can be thrown on your next throw<br />
+        <label>
+          Roll Amount:
+          <input type="number" min="0" max="{{contestant.pinsLeft}}" #rollAmount />
+        </label>
+        <button (click)="roll(contestant, rollAmount.value)" [attr.disabled]="busy ? '': null">
+          roll
+        </button>
+      </div>
+      <ng-template #nomoretries>
+        <br />
+        Contestant has no more attempts
+      </ng-template>
+    </div>
+  </div>
+  <ng-template #nogame>
+    <div>
+      You will need to begin the game to start rolling
+    </div>
+  </ng-template>
+</div>

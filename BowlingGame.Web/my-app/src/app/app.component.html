@@ -1,0 +1,46 @@
+<h1>{{ title }}</h1>
+<table>
+<tr>
+  <td>
+    <app-contestants></app-contestants>
+  </td>
+  <td style="width:100px">
+
+  </td>
+  <td>
+    <h1 *ngIf="bowlingGameService.checkingForGame; else elseBlock">Checking for an existing game...</h1>
+
+    <ng-template #elseBlock>
+      <div *ngIf="bowlingGameService.isGameUnderway; else nogame">
+        <app-leaderboard></app-leaderboard>
+      </div>
+      <ng-template #nogame>
+        <div>
+          <div>
+            No Games underway - To start, follow the instructions below:
+            <ol>
+              <li>
+                Add Contestants (keep the names unique)
+              </li>
+              <li>
+                Begin the game once your contestant list is complete (you will not be able to add new contestants after the game starts)
+              </li>
+              <li>
+                Select a contestant on the left that you want to start rolling for.
+              </li>
+              <li>
+                Once a contestants turns are complete, they will turn red.
+              </li>
+              <li>
+                The Game automatically completes once all contestants turns are complete.
+              </li>
+            </ol>
+          </div>
+        </div>
+      </ng-template>
+    </ng-template>
+  </td>
+</tr>
+</table>
+<app-notifications></app-notifications>
+
