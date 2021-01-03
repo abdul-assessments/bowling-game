@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="my-app\dist\**" />
+    <Content Remove="my-app\dist\**" />
+    <EmbeddedResource Remove="my-app\dist\**" />
+    <None Remove="my-app\dist\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BowlingGame.Core\BowlingGame.Core.csproj" />
   </ItemGroup>
 
