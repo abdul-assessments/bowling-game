@@ -29,10 +29,6 @@ export class ContestantsComponent implements OnInit {
     name = name.trim();
     if (!name) { return; }
     this.contestants.push({contestantName: name, pinsLeft: 10, score: 0} as Contestant)
-    //this.heroService.addHero({ name } as Hero)
-    //  .subscribe(hero => {
-    //    this.heroes.push(hero);
-    //  });
   }
   resetGame(): void {
     this.bowlingGameService.reset().subscribe(_ => this.reset());
