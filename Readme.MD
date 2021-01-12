@@ -1,3 +1,10 @@
+# Purpose
+The purpose for this repository (and reason for making it public) is to help gain expert opinions on improvements on how an angular .net core build like this can be put together.
+Also, I would just like to share work that I have put a lot of effort into, but seemed to be a waste of time as the assessing company did not give any meaningful feedback on the work. Their response was a simple "fine", which I believe just does not do justice to the effort.
+
+## How this repository can help you
+If you applying to Dotdigital and are requested to complete an assessment by creating a bowling game with angular and .net core webApi, then this repo is for you and can help save you ALOT of time. Alternatively, please feel free to take part in the discussion to improve this repo for anyone that could benefit.
+
 # Introduction 
 Welcome to the BowlingGame project. It is written in 2 parts. Angular for the FE and .Net Core for the BE.
 BowlingGame.Web as the Api and my-app with-in the api project as the angular FE.
