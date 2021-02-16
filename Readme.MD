@@ -13,7 +13,7 @@ BowlingGame.Web as the Api and my-app with-in the api project as the angular FE.
 * IIS / IISExpress
 
 # Build and Test
-1.	Clone the project and open in VS2019. There are 2 apps that run seperately. 
+1.	Clone the project and open in VS2019.
 2.  You will need to run the .Net Core WebApi (BowlingGame.Web). (It can be in debug mode)
 3.  The angular app requires an apiBaseUrl that you will need to change if required. This can be found in /my-app/src/environments/environment.ts
 4.  The Angular app is located in /BowlingGame.Web/my-app/, however, the compiled scripts are referenced in the .Net Core app
