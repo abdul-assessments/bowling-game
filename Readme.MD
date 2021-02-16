@@ -4,18 +4,17 @@ BowlingGame.Web as the Api and my-app with-in the api project as the angular FE.
 
 # Prerequisites
 * [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.101-windows-x64-installer)
-* [Angular 2](https://angular.io)
 
 
 ## Built Using
 * Angular CLI
 * Visual Studio 2019
-* IIS / IISExpress
+* IISExpress
 
 # Build and Test
 1.	Clone the project and open in VS2019.
 2.  The Angular app is located in /BowlingGame.Web/my-app/, however, the compiled scripts are referenced in the .Net Core app
-3.  The Angular app requires an apiBaseUrl that can be changed if required. This can be found in /my-app/src/environments/environment.ts
+3.  The Angular app requires an apiBaseUrl that can be changed if required. This can be found in /my-app/src/environments/environment.ts, changes to this file will require a rebuild of the angular app.
 4.  You will need to run the .Net Core WebApi (BowlingGame.Web). (It can be in debug mode)
 5.	Drop a few breakpoints around the WebApi controller (BowlingController) and see how the system functions.
 6.  There are tests. Currently implemented only for calculation logic.
